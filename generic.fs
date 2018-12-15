@@ -10,7 +10,7 @@ game-words set-current
   NOUNS: northwest northeast southwest southeast
   NOUNS: n s e w nw ne sw se u d
   NOUNS: all
-  VERBS: inventory i get drop look examine eat drink go
+  VERBS: inventory i get drop look search examine eat drink go
   FILLERS: a an the at
   : quit   cr bye ;
 only forth definitions
@@ -145,6 +145,7 @@ variable map-start  variable map-outside
   then
 
   q" examine" verb=
+  q" search" verb= or
   q" look" verb= or if
     ego find-object
     dup 0= if

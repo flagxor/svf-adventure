@@ -5,10 +5,12 @@ s" generic.fs" included
 
 ( Define game words )
 game-words set-current
+  VERBS: use
   NOUNS: self myself
-  NOUNS: man tech body lab
-  NOUNS: laptop n95 mask poster
+  NOUNS: man tech body lab lab-tech
+  NOUNS: laptop computer n95 mask poster
 only forth definitions
+
 
 ENTITY: player   Me myself and I
 CALLED: self
@@ -16,39 +18,43 @@ CALLED: myself
 DESCRIPTION: A 21st century Morlock, your pallid pallor reflects a life spent in under the glare of artificial lighting.
 player the-player !
 
+
 ROOM: safe-room    Safe Room
 DESCRIPTION: A nearly impenetrable safe-room, complete with panic button, bullet proof glass, and a mini-bar. Built in the event dissatisfied customers, investors, or concerned members of the general public decide to take a hands on approach to the company.  A solid steel door lies to the east.
-
-ROOM: hydroponics   Hydroponic Garden
-DESCRIPTION: This garden supplies the company cafeteria with a bountiful supply of locally grown organic produce. A steel door lies to the west.
-
-ENTITY: lab-tech   Lab Technician
-CALLED: man
-CALLED: tech
-CALLED: lab tech
-CALLED: body
-DESCRIPTION: The lab tech has a hideous grin on his face, and seems to be most thoroughly dead.
 
 PROP: n95-mask   An N95 mask
 CALLED: mask
 CALLED: n95
 it .holdable set
 DESCRIPTION: At 60 cents a pop, these N95 personal respiratory masks give you a sense of invincibility in facing a chaotic and toxic particulate filled world.
+n95-mask safe-room into
+
 
 PROP: laptop   A laptop
 CALLED: laptop
+CALLED: computer
 it .holdable set
 DESCRIPTION: Having been designed with heat-sinks in place of a proper fan, this late model laptop struggles to run Windows.
+laptop safe-room into
+
+ROOM: hydroponics   Hydroponic Garden
+DESCRIPTION: This garden supplies the company cafeteria with a bountiful supply of locally grown organic produce. A steel door lies to the west. A lab-tech is laying face down on the floor.
 
 PROP: poster   Motivatational Poster
 CALLED: poster
 it .holdable set
 DESCRIPTION: Much like a Soviet era poster, this slice of internal company propaganda encourages the "workers" to give their all to the cause.
+poster hydroponics into
 
-lab-tech safe-room into
-n95-mask safe-room into
-poster safe-room into
-laptop safe-room into
+ENTITY: lab-tech   Lab Technician
+CALLED: man
+CALLED: tech
+CALLED: lab tech
+CALLED: lab-tech
+CALLED: body
+DESCRIPTION: The lab tech has a hideous grin on his face, and seems to be most thoroughly dead.
+lab-tech hydroponics into
+
 
 ROOM: B01   Fence
 DESCRIPTION: A large fence blocks your path to the north and west. An occasional sign on its surface indicates danger. Is the danger inside or outside?
@@ -235,6 +241,27 @@ player safe-room into
 
 : handle-input
   generic-handling if exit then
+
+  q" use" if
+    player find-object
+    dup laptop = if
+      say: You'd rather not. That's what got you into this mess in the first place.
+      drop exit
+    then
+    dup lab-tech = if
+      say: For what?!
+      drop exit
+    then
+    dup n95-mask = if
+      say: You breath through the mask. It is exceedingly tight, so you take it off.
+      drop exit
+    then
+    dup 0= if
+      say: Use what for what again?
+      drop exit
+    then
+    drop
+  then
 
   say: Sadly, I've got no idea what you mean.
 ;
