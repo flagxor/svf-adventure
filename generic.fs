@@ -11,6 +11,7 @@ game-words set-current
   NOUNS: n s e w nw ne sw se u d
   NOUNS: all
   VERBS: inventory i get drop look search examine eat drink go push pull
+  VERBS: enter exit
   FILLERS: a an the at
   : quit   cr bye ;
 only forth definitions

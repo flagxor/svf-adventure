@@ -9,6 +9,8 @@ game-words set-current
   NOUNS: self myself
   NOUNS: man tech body lab lab-tech
   NOUNS: laptop computer n95 mask poster console orange button airlock posters
+  NOUNS: fire extinguisher
+  NOUNS: house shed concrete blue door
 only forth definitions
 
 ATTRIBUTES: .open .locked
@@ -154,8 +156,20 @@ DESCRIPTION: A thick forest surrounds you. Large ancient pine trees obscure much
 ROOM: F13   Forest
 DESCRIPTION: A thick forest surrounds you. Large ancient pine trees obscure much of the sun. Calls of birds sound occassionally in all directions.
 
-ROOM: HOU   
+ROOM: HOU   Outside Shed
 DESCRIPTION: A concrete shed sits curiously in the midst of a dense forest. Its single metal door is painted a bland blue.
+
+PROP: outside-shed   a concrete shed
+CALLED: shed
+CALLED: concrete shed
+CALLED: house
+DESCRIPTION: The shed consists of mostly concrete, with a lone metal door painted blue.
+outside-shed HOU into
+
+PROP: shed-door   door to shed
+CALLED: blue door
+CALLED: door
+DESCRIPTION: The blue door to the shed hangs slightly open.
 
 ROOM: F15   Forest
 DESCRIPTION: A thick forest surrounds you. Large ancient pine trees obscure much of the sun. Calls of birds sound occassionally in all directions.
@@ -191,13 +205,13 @@ DESCRIPTION: You are in a twisty sea of cubicals, all alike. Personal space, bei
 ROOM: R06   Open Office Floorplan
 DESCRIPTION: You are in a twisty sea of cubicals, all alike. Keen instincts inherited from your savannah dwelling ancestors allow you to use distant landmarks (posters and hand sanitizer dispensers) to orient yourself. The cubes continue to the north and east. To the west, a small passage leads away from the monotony.
 
-ROOM: R07   Placeholder Room
-DESCRIPTION: Say something.
+ROOM: R07   L-shaped Hallway
+DESCRIPTION: A bend in the hallway connects east to south. You really should have asked for hazard pay instead of what you assume are now worthless stock options.
 
 ROOM: R08   A T-shaped Hallway
 DESCRIPTION: You are inside a T-shaped hallway. The top of the T contains a padded panel filled with posters held in place by pushpins.
 
-ENTITY: posters   various posters pinned to the wall
+PROP: posters   various posters pinned to the wall
 CALLED: posters
 DESCRIPTION: Several dozen posters promote various company events, describe company policies on bribery and gift giving. (To be clear the company seems to be opposed to both.) Other posters encourage mindfulness. One ominously asks, "Is this good for the company?"
 posters R08 into
@@ -206,24 +220,31 @@ ROOM: ALK   Airlock
 DESCRIPTION: A ten foot radius circular airlock connects the west to the east. A large console sits in the middle of the airlock. A thin layer of dust on either side of the airlock undermines any presense it actually keeps out particulate matter.
 hydroponics ALK connect-we
 
-ENTITY: airlock   airlock
+PROP: airlock   airlock
 CALLED: airlock
 DESCRIPTION: The large pair of motorized doors, collection of high speed vents, and lots of glass make for an airlock straight out of a cheap 1960s Sci-Fi episode.
 airlock ALK into
 
-ENTITY: airlock-console   airlock control console
+PROP: airlock-console   airlock control console
 CALLED: console
 DESCRIPTION: This control console operates the airlock. Prominently placed in the middle of the console is a bright orange button.
 airlock-console ALK into
 
-ENTITY: airlock-toggle   airlock toggle button
+PROP: airlock-toggle   airlock toggle button
 CALLED: button
 CALLED: orange button
 DESCRIPTION: The bright orange button the middle of the console calls to you. What ever could it do?
 airlock-toggle ALK into
 
-ROOM: R10   Placeholder Room
-DESCRIPTION: Say something.
+ROOM: R10   Hallway Dead End
+DESCRIPTION: At the end of the hallway, a space for a fire extinguisher, painted red filles the right side of the wall. A metal ladder, painted white, leads up into the ceiling.
+
+PROP: extinguisher   a fire extinguisher
+CALLED: fire extinguisher
+CALLED: extinguisher
+it .holdable set
+DESCRIPTION: Dutifully marked with a regularly updated log, a lone fire extinguisher holds compliant vigil over a world filled with chaos. Its markings call forth a confident prayer to the gods, to the collective judgement of mankind, and to to OSHA, "I was checked regularly, and am therefore not financially liable."
+extinguisher R10 into
 
 ROOM: R11   Open Office Floorplan
 DESCRIPTION: You are in a twisty sea of cubicals, all alike. The simple invention of the noise cancelling headphones has changed so much for modern man. The cubes continue to the north and west. To the east lies a hallway.
@@ -260,9 +281,11 @@ ALK R08  0   0  R13  0  |m
 ROOM: shed   Inside Shed
 DESCRIPTION: The shed is illuminated by a single dim lightbulb. A small hatch in the floor leads into darkness. A metal ladder, fused with the concrete is visible.
 
+( Glue in the start rooms )
 safe-room hydroponics connect-we
-R10 shed connect-ud
+shed R10 connect-ud
 
+( Start in the safe room )
 player safe-room into
 
 : handle-input
@@ -295,6 +318,23 @@ player safe-room into
         else
           say: The airlock giant airlock surounds you. It currently opens to the west.
         then
+        exit
+      then
+    then
+  then
+  
+  shed room = if
+    q" exit" verb= if
+      ego HOU into ?describe
+      exit
+    then
+  then
+
+  HOU room = if
+    q" enter" verb= if
+      the-object outside-shed = 
+      the-object shed-door = or if
+        ego shed into ?describe
         exit
       then
     then
