@@ -199,7 +199,7 @@ B15 F16 B16 B17 B18  0  |m
  0  B19  0   0   0   0  |m
 ;map
 
-ROOM: R01   Lobby
+ROOM: Lobby   Lobby
 DESCRIPTION: Say something.
 
 ROOM: R02   Placeholder Room
@@ -208,47 +208,47 @@ DESCRIPTION: Say something.
 ROOM: R03   Placeholder Room
 DESCRIPTION: Say something.
 
-ROOM: R04   Open Office Floorplan
+ROOM: Off04   Open Office Floorplan
 DESCRIPTION: You are in a twisty sea of cubicals, all alike. The cubes continue to the south and east. To the north, past fire doors, lies an exit.
 
-ROOM: R05   Open Office Floorplan
+ROOM: Off05   Open Office Floorplan
 DESCRIPTION: You are in a twisty sea of cubicals, all alike. Personal space, being in conflict with rapid fire collaboration has come decidedly second. The cubes continue to the south and west.
 
-ROOM: R06   Open Office Floorplan
+ROOM: Off06   Open Office Floorplan
 DESCRIPTION: You are in a twisty sea of cubicals, all alike. Keen instincts inherited from your savannah dwelling ancestors allow you to use distant landmarks (posters and hand sanitizer dispensers) to orient yourself. The cubes continue to the north and east. To the west, a small passage leads away from the monotony.
 
-ROOM: R07   L-shaped Hallway
+ROOM: Lroom   L-shaped Hallway
 DESCRIPTION: A bend in the hallway connects east to south. You really should have asked for hazard pay instead of what you assume are now worthless stock options.
 
-ROOM: R08   A T-shaped Hallway
+ROOM: Troom   A T-shaped Hallway
 DESCRIPTION: You are inside a T-shaped hallway. The top of the T contains a padded panel filled with posters held in place by pushpins.
 
 PROP: posters   various posters pinned to the wall
 CALLED: posters
 DESCRIPTION: Several dozen posters promote various company events, describe company policies on bribery and gift giving. (To be clear the company seems to be opposed to both.) Other posters encourage mindfulness. One ominously asks, "Is this good for the company?"
-posters R08 into
+posters Troom into
 
-ROOM: ALK   Airlock
+ROOM: ALock   Airlock
 DESCRIPTION: A ten foot radius circular airlock connects the west to the east. A large console sits in the middle of the airlock. A thin layer of dust on either side of the airlock undermines any presense it actually keeps out particulate matter.
-hydroponics ALK connect-we
+hydroponics ALock connect-we
 
 PROP: airlock   airlock
 CALLED: airlock
 DESCRIPTION: The large pair of motorized doors, collection of high speed vents, and lots of glass make for an airlock straight out of a cheap 1960s Sci-Fi episode.
-airlock ALK into
+airlock ALock into
 
 PROP: airlock-console   airlock control console
 CALLED: console
 DESCRIPTION: This control console operates the airlock. Prominently placed in the middle of the console is a bright orange button.
-airlock-console ALK into
+airlock-console ALock into
 
 PROP: airlock-toggle   airlock toggle button
 CALLED: button
 CALLED: orange button
 DESCRIPTION: The bright orange button the middle of the console calls to you. What ever could it do?
-airlock-toggle ALK into
+airlock-toggle ALock into
 
-ROOM: R10   Hallway Dead End
+ROOM: Laddr   Hallway Dead End
 DESCRIPTION: At the end of the hallway, a space for a fire extinguisher, painted red filles the right side of the wall. A metal ladder, painted white, leads up into the ceiling.
 
 PROP: extinguisher   a fire extinguisher
@@ -256,12 +256,12 @@ CALLED: fire extinguisher
 CALLED: extinguisher
 it .holdable set
 DESCRIPTION: Dutifully marked with a regularly updated log, a lone fire extinguisher holds compliant vigil over a world filled with chaos. Its markings call forth a confident prayer to the gods, to the collective judgement of mankind, and to to OSHA, "I was checked regularly, and am therefore not financially liable."
-extinguisher R10 into
+extinguisher Laddr into
 
-ROOM: R11   Open Office Floorplan
+ROOM: Off11   Open Office Floorplan
 DESCRIPTION: You are in a twisty sea of cubicals, all alike. The simple invention of the noise cancelling headphones has changed so much for modern man. The cubes continue to the north and west. To the east lies a hallway.
 
-ROOM: R12   Copier Room
+ROOM: CopyR   Copier Room
 DESCRIPTION: A combined copied, printer, scanner occupies one side of the small room. On the other, a tall black cabinet. Company policy dictacts no employee shall have to walk more than 500 feet to reach a photocopier or printer.
 
 ROOM: R13   Placeholder Room
@@ -280,28 +280,28 @@ ROOM: R17   Placeholder Room
 DESCRIPTION: Say something.
 
 map-inside:
- 0  R01  0   0   0  R17 |m
- 0  R02 R03  0   0  R16 |m
- 0   0  R04 R05  0  R15 |m
- 0  R07 R06 R11 R12 R14 |m
-ALK R08  0   0  R13  0  |m
- 0  R10  0   0   0   0  |m
+  0   Lobby   0     0     0    R17  |m
+  0    R02   R03    0     0    R16  |m
+  0     0   Off04 Off05   0    R15  |m
+  0   Lroom Off06 Off11 CopyR  R14  |m
+ALock Troom   0     0    R13    0   |m
+  0   Laddr   0     0     0     0   |m
 ;map
 
-0 ALK .east !  ( airlock starts out to the west )
+0 ALock .east !  ( airlock starts out to the west )
 
 ROOM: shed   Inside Shed
 DESCRIPTION: The shed is illuminated by a single dim lightbulb. A small hatch in the floor leads into darkness. A metal ladder, fused with the concrete is visible.
 
 ( Glue in the start rooms )
 safe-room hydroponics connect-we
-shed R10 connect-ud
+shed Laddr connect-ud
 
 ( Start in the safe room )
 player safe-room into
 
 : handle-input
-  ALK room = if
+  ALock room = if
     q" push" verb= if
       the-object airlock-console = if
         say: You lean on the console, it creaks but does not budge.
@@ -312,13 +312,13 @@ player safe-room into
         airlock-console .open get if
           airlock-console .open clear
           say: The airlock now opens to the west.
-          hydroponics ALK .west !
-          0 ALK .east !
+          hydroponics ALock .west !
+          0 ALock .east !
         else
           airlock-console .open set
           say: The airlock now opens to the east.
-          0 ALK .west !
-          R08 ALK .east !
+          0 ALock .west !
+          Troom ALock .east !
         then
         exit
       then
