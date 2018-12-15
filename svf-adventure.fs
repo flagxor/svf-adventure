@@ -22,15 +22,16 @@ player the-player !
 ROOM: safe-room    Safe Room
 DESCRIPTION: A nearly impenetrable safe-room, complete with panic button, bullet proof glass, and a mini-bar. Built in the event dissatisfied customers, investors, or concerned members of the general public decide to take a hands on approach to the company.  A solid steel door lies to the east.
 
-PROP: n95-mask   An N95 mask
+PROP: n95-mask   an N95 mask
 CALLED: mask
 CALLED: n95
+CALLED: n95 mask
 it .holdable set
 DESCRIPTION: At 60 cents a pop, these N95 personal respiratory masks give you a sense of invincibility in facing a chaotic and toxic particulate filled world.
 n95-mask safe-room into
 
 
-PROP: laptop   A laptop
+PROP: laptop   a laptop
 CALLED: laptop
 CALLED: computer
 it .holdable set
@@ -40,13 +41,13 @@ laptop safe-room into
 ROOM: hydroponics   Hydroponic Garden
 DESCRIPTION: This garden supplies the company cafeteria with a bountiful supply of locally grown organic produce. A steel door lies to the west. A lab-tech is laying face down on the floor.
 
-PROP: poster   Motivatational Poster
+PROP: poster   a motivatational poster
 CALLED: poster
 it .holdable set
 DESCRIPTION: Much like a Soviet era poster, this slice of internal company propaganda encourages the "workers" to give their all to the cause.
 poster hydroponics into
 
-ENTITY: lab-tech   Lab Technician
+ENTITY: lab-tech   a lab technician
 CALLED: man
 CALLED: tech
 CALLED: lab tech
@@ -244,11 +245,14 @@ player safe-room into
 
   q" use" if
     player find-object
+    dup 0= if
+      drop room find-object
+    then
     dup laptop = if
       say: You'd rather not. That's what got you into this mess in the first place.
       drop exit
     then
-    dup lab-tech = if
+    dup lab-tech = over player = or if
       say: For what?!
       drop exit
     then

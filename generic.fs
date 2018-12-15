@@ -39,7 +39,7 @@ variable the-player   : ego the-player @ ;
      ." You see:" cr
      ego .parent @ list-contents cr
    then ;
-: short-describe    room .short-name @ cwrap ;
+: short-describe    bold room .short-name @ cwrap normal ;
 : long-describe    room .description @ cwrap
                    room .described set ;
 : describe    short-describe long-describe describe-contents ;

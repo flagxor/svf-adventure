@@ -18,6 +18,10 @@
 : and! ( n a -- ) swap over @ and swap ! ;
 : or! ( n a -- ) swap over @ or swap ! ;
 
+( Terminal Utilities )
+: normal   27 emit ." [0m" ;
+: bold   27 emit ." [1m" ;
+
 ( Vocabulary for game words )
 wordlist constant game-words
 : use-game-words   game-words 1 set-order ;
