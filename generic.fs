@@ -3,6 +3,14 @@ PROPERTIES: .north .south .east .west .up .down
 PROPERTIES: .northeast .northwest .southwest .southeast
 ATTRIBUTES: .holdable .described
 ATTRIBUTES: .open .locked
+ATTRIBUTES: .entity
+
+( Kinds of objects )
+: ROOM:   named-object ;
+: SCENERY:   named-object ;
+: PROP:   named-object it .holdable set ;
+: ENTITY:   named-object it .entity set ;
+: PLAYER:   named-object ;
 
 ( Words common to many games )
 game-words set-current
@@ -11,7 +19,7 @@ game-words set-current
   NOUNS: n s e w nw ne sw se u d
   NOUNS: all
   VERBS: inventory i get drop look search examine eat drink go push pull
-  VERBS: enter exit
+  VERBS: enter exit talk ask
   FILLERS: a an the at
   : quit   cr bye ;
 only forth definitions
@@ -21,7 +29,8 @@ variable the-player   : ego the-player @ ;
 
 ( Handling of holdable objects )
 : list-item ( o -- ) 4 spaces .short-name @ cc>s type cr ;
-: list-if-holdable ( o -- ) dup .holdable get if list-item else drop then ;
+: listable? ( o -- f ) dup .holdable get swap .entity get or ;
+: list-if-holdable ( o -- ) dup listable? if list-item else drop then ;
 : list-contents ( o -- ) ['] list-if-holdable iterate ;
 : tally-holdable ( n o -- n ) .holdable get if 1 + then ;
 : count-holdables ( o -- n ) 0 swap ['] tally-holdable iterate ;

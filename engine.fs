@@ -86,8 +86,6 @@ variable attribute-count
 : set ( a attr -- ) swap .attributes or! ;
 : clear ( a attr -- ) invert swap .attributes and! ;
 : get ( a attr -- f ) swap .attributes @ and 0<> ;
-( Built-in attributes )
-ATTRIBUTES: .room .entity .prop
 
 ( List handling )
 : remove' ( o -- )
@@ -123,9 +121,6 @@ variable current-object   : it ( -- o ) current-object @ ;
 raw-object nowhere
 : object   raw-object it nowhere insert' ;
 : named-object   object here trailing, it .short-name ! ;
-: ROOM:   named-object it .room set ;
-: PROP:   named-object it .prop set ;
-: ENTITY:   named-object it .entity set ;
 : DESCRIPTION:   here trailing, it .description ! ;
 : CALLED:   eat-phrase here it .called @ , phrase , it .called !
             failed @ throw ;

@@ -12,12 +12,12 @@ game-words set-current
   NOUNS: fire extinguisher
   NOUNS: house shed concrete blue door
   NOUNS: minibar mini-bar panic nickle coin microphone
-  NOUNS: usb lamp "lamp" ramen pack toy unicorn
+  NOUNS: usb lamp "lamp" ramen pack toy unicorn roy
 only forth definitions
 
 ATTRIBUTES: .open .locked
 
-ENTITY: player   Me myself and I
+PLAYER: player   Me myself and I
 CALLED: self
 CALLED: myself
 DESCRIPTION: A 21st century Morlock, your pallid pallor reflects a life spent in under the glare of artificial lighting.
@@ -31,24 +31,22 @@ PROP: n95-mask   an N95 mask
 CALLED: mask
 CALLED: n95
 CALLED: n95 mask
-it .holdable set
 DESCRIPTION: At 60 cents a pop, these N95 personal respiratory masks give you a sense of invincibility in facing a chaotic and toxic particulate filled world.
 n95-mask SafeR into
 
 PROP: laptop   a laptop
 CALLED: laptop
 CALLED: computer
-it .holdable set
 DESCRIPTION: Having been designed with heat-sinks in place of a proper fan, this late model laptop struggles to run Windows.
 laptop SafeR into
 
-PROP: mini-bar   the minibar
+SCENERY: mini-bar   the minibar
 CALLED: minibar
 CALLED: mini-bar
 DESCRIPTION: A collection of various single malt whiskeys, sundry bitters, a few cans of tonic water. Cocktail shakers and glasses sit to one side.
 mini-bar SafeR into
 
-PROP: panic-button   the panic button
+SCENERY: panic-button   the panic button
 CALLED: panic button
 CALLED: button
 DESCRIPTION: A bright red button is intended to close steel door and summon the authorities in the event love fails to triumph.
@@ -60,9 +58,14 @@ DESCRIPTION: This garden supplies the company cafeteria with a bountiful supply 
 ROOM: Lunch   Company Cafeteria
 DESCRIPTION: In order to compete in attracting top talent, the company provides free meals to its employees for breakfast, lunch, and dinner.
 
+ENTITY: roy Roy
+CALLED: roy
+CALLED: man
+DESCRIPTION: Roy is approximately 40 years old, wearing a yellow company T-Shirt and jeans. His glasses are dramatically thicker over his left eye than the right. Roy had always told you bad things would happen, and no doubt underneath his look of abject terror, he must be gloating.
+roy Lunch into
+
 PROP: poster   a motivatational poster
 CALLED: poster
-it .holdable set
 DESCRIPTION: Much like a Soviet era poster, this slice of internal company propaganda encourages the "workers" to give their all to the cause.
 poster Hydro into
 
@@ -172,7 +175,6 @@ DESCRIPTION: The forest thins here, allowing you to see a patch of the yellow ha
 PROP: nickle    a nickle
 CALLED: nickle
 CALLED: coin
-it .holdable set
 DESCRIPTION: Apparently it's your last five cents. The greasy coin glints slightly in the light.
 nickle CLR into
 
@@ -182,14 +184,14 @@ DESCRIPTION: A thick forest surrounds you. Large ancient pine trees obscure much
 ROOM: HOU   Outside Shed
 DESCRIPTION: A concrete shed sits curiously in the midst of a dense forest. Its single metal door is painted a bland blue.
 
-PROP: outside-shed   a concrete shed
+SCENERY: outside-shed   a concrete shed
 CALLED: shed
 CALLED: concrete shed
 CALLED: house
 DESCRIPTION: The shed consists of mostly concrete, with a lone metal door painted blue.
 outside-shed HOU into
 
-PROP: shed-door   door to shed
+SCENERY: shed-door   door to shed
 CALLED: blue door
 CALLED: door
 DESCRIPTION: The blue door to the shed hangs slightly open.
@@ -222,7 +224,6 @@ DESCRIPTION: While many Bay Area companies are known for lavish in-house meals a
 PROP: ramen   a pack of ramen
 CALLED: ramen
 CALLED: pack
-it .holdable set
 DESCRIPTION: It's a package of chicken "flavored" ramen, the de-facto currency in the nation's prisons. Nearly as bad for you as a cigarette, it has displaced them as the coin of choice for felons everywhere.
 ramen Break into
 
@@ -241,7 +242,7 @@ DESCRIPTION: A bend in the hallway connects east to south. You really should hav
 ROOM: Troom   A T-shaped Hallway
 DESCRIPTION: You are inside a T-shaped hallway. The top of the T contains a padded panel filled with posters held in place by pushpins.
 
-PROP: posters   various posters pinned to the wall
+SCENERY: posters   various posters pinned to the wall
 CALLED: posters
 DESCRIPTION: Several dozen posters promote various company events, describe company policies on bribery and gift giving. (To be clear the company seems to be opposed to both.) Other posters encourage mindfulness. One ominously asks, "Is this good for the company?"
 posters Troom into
@@ -249,17 +250,17 @@ posters Troom into
 ROOM: ALock   Airlock
 DESCRIPTION: A ten foot radius circular airlock connects the west to the east. A large console sits in the middle of the airlock. A thin layer of dust on either side of the airlock undermines any presense it actually keeps out particulate matter.
 
-PROP: airlock   airlock
+SCENERY: airlock   airlock
 CALLED: airlock
 DESCRIPTION: The large pair of motorized doors, collection of high speed vents, and lots of glass make for an airlock straight out of a cheap 1960s Sci-Fi episode.
 airlock ALock into
 
-PROP: airlock-console   airlock control console
+SCENERY: airlock-console   airlock control console
 CALLED: console
 DESCRIPTION: This control console operates the airlock. Prominently placed in the middle of the console is a bright orange button.
 airlock-console ALock into
 
-PROP: airlock-toggle   airlock toggle button
+SCENERY: airlock-toggle   airlock toggle button
 CALLED: button
 CALLED: orange button
 DESCRIPTION: The bright orange button the middle of the console calls to you. What ever could it do?
@@ -271,7 +272,6 @@ DESCRIPTION: At the end of the hallway, a space for a fire extinguisher, painted
 PROP: extinguisher   a fire extinguisher
 CALLED: fire extinguisher
 CALLED: extinguisher
-it .holdable set
 DESCRIPTION: Dutifully marked with a regularly updated log, a lone fire extinguisher holds compliant vigil over a world filled with chaos. Its markings call forth a confident prayer to the gods, to the collective judgement of mankind, and to to OSHA, "I was checked regularly, and am therefore not financially liable."
 extinguisher Laddr into
 
@@ -288,7 +288,6 @@ PROP: lamp   a usb "lamp"
 CALLED: usb lamp
 CALLED: lamp
 CALLED: usb "lamp"
-it .holdable set
 DESCRIPTION: A cheap prize handed out at some event or other, branded with the company logo, this USB-A device powers a small LED lamp.
 lamp Machn into
 
@@ -299,7 +298,6 @@ PROP: unicorn   a toy unicorn
 CALLED: toy
 CALLED: toy unicorn
 CALLED: unicorn
-it .holdable set
 DESCRIPTION: Talisman against quarterly losses, SEC investigations, and meglomanical self doubt the company founder no doubt holds this plastic toy dear.
 unicorn Off14 into
 
