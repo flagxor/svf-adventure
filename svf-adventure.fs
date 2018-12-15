@@ -11,6 +11,7 @@ game-words set-current
   NOUNS: laptop computer n95 mask poster console orange button airlock posters
   NOUNS: fire extinguisher
   NOUNS: house shed concrete blue door
+  NOUNS: minibar mini-bar panic
 only forth definitions
 
 ATTRIBUTES: .open .locked
@@ -33,13 +34,24 @@ it .holdable set
 DESCRIPTION: At 60 cents a pop, these N95 personal respiratory masks give you a sense of invincibility in facing a chaotic and toxic particulate filled world.
 n95-mask safe-room into
 
-
 PROP: laptop   a laptop
 CALLED: laptop
 CALLED: computer
 it .holdable set
 DESCRIPTION: Having been designed with heat-sinks in place of a proper fan, this late model laptop struggles to run Windows.
 laptop safe-room into
+
+PROP: mini-bar   the minibar
+CALLED: minibar
+CALLED: mini-bar
+DESCRIPTION: A collection of various single malt whiskeys, sundry bitters, a few cans of tonic water. Cocktail shakers and glasses sit to one side.
+mini-bar safe-room into
+
+PROP: panic-button   the panic button
+CALLED: panic button
+CALLED: button
+DESCRIPTION: A bright red button is intended to close steel door and summon the authorities in the event love fails to triumph.
+panic-button safe-room into
 
 ROOM: hydroponics   Hydroponic Garden
 DESCRIPTION: This garden supplies the company cafeteria with a bountiful supply of locally grown organic produce. A steel door lies to the west, a dim corridor to the east. A lab-tech is laying face down on the floor.
@@ -56,7 +68,7 @@ CALLED: tech
 CALLED: lab tech
 CALLED: lab-tech
 CALLED: body
-DESCRIPTION: The lab tech has a hideous grin on his face, and seems to be most thoroughly dead.
+DESCRIPTION: The lab tech has a hideous grin on his face, and seems to be most thoroughly dead. It's not readily apparent what caused his death.
 lab-tech hydroponics into
 
 
