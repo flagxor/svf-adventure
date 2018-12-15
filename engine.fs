@@ -27,22 +27,29 @@ wordlist constant game-words
 : use-game-words   game-words 1 set-order ;
 
 ( Handle parts of a phrase )
-variable cmd   variable obj   variable failed
+variable cmd   variable failed
+create obj 0 , 0 ,   variable section
 variable uid   2 uid !
-: noun create uid @++ , does> @ obj @ 8 lshift + obj ! ;
+: oobj ( -- a ) obj section @ cells + ;
+: noun create uid @++ , does> @ oobj @ 8 lshift + oobj ! ;
 : NOUNS: ['] noun while-trailing ;
 : verb create uid @++ , does> @ cmd @ 8 lshift + cmd ! ;
 : VERBS: ['] verb while-trailing ;
+: preposition create does> drop 1 section ! ;
+: PREPOSITIONS: ['] preposition while-trailing ;
 : filler create does> drop ;
 : FILLERS: ['] filler while-trailing ;
 
 ( Update/get state of current phrase )
-: reset-phrase   0 cmd !  0 obj !  0 failed ! ;
+: reset-phrase   0 cmd !  0 obj !  0 obj cell+ !  0 section !  0 failed ! ;
 : bad-word   1 obj !  1 failed ! ;
-: phrase   obj @ 8 lshift cmd @ + ;
+255 constant vmask
+1 24 lshift 1- constant omask
+: phrase   obj cell+ @ 32 lshift obj @ 8 lshift + cmd @ + ;
 : phrase=   phrase = ;
-: verb=   phrase 255 and = ;
-: object=   phrase 255 invert and = ;
+: verb=   phrase vmask and = ;
+: object=   phrase 8 rshift omask and = ;
+: other=   phrase 32 rshift omask and = ;
 
 ( Parse current phrase )
 : eat-word   bl word find if execute else drop bad-word then ;

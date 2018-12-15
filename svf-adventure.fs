@@ -12,7 +12,7 @@ game-words set-current
   NOUNS: fire extinguisher
   NOUNS: house shed concrete blue door
   NOUNS: minibar mini-bar panic nickle coin microphone
-  NOUNS: usb lamp "lamp" ramen pack toy unicorn roy
+  NOUNS: usb lamp "lamp" ramen pack toy unicorn roy bevins
 only forth definitions
 
 ATTRIBUTES: .open .locked
@@ -40,6 +40,14 @@ CALLED: computer
 DESCRIPTION: Having been designed with heat-sinks in place of a proper fan, this late model laptop struggles to run Windows.
 laptop SafeR into
 
+ENTITY: roy Roy Bevins
+CALLED: roy
+CALLED: bevins
+CALLED: roy bevins
+CALLED: man
+DESCRIPTION: Roy is approximately 40 years old, wearing a yellow company T-Shirt and jeans. His glasses are dramatically thicker over his left eye than the right. Roy had always told you bad things would happen, and no doubt underneath his look of abject terror, he must be gloating.
+roy SafeR into
+
 SCENERY: mini-bar   the minibar
 CALLED: minibar
 CALLED: mini-bar
@@ -57,12 +65,6 @@ DESCRIPTION: This garden supplies the company cafeteria with a bountiful supply 
 
 ROOM: Lunch   Company Cafeteria
 DESCRIPTION: In order to compete in attracting top talent, the company provides free meals to its employees for breakfast, lunch, and dinner.
-
-ENTITY: roy Roy
-CALLED: roy
-CALLED: man
-DESCRIPTION: Roy is approximately 40 years old, wearing a yellow company T-Shirt and jeans. His glasses are dramatically thicker over his left eye than the right. Roy had always told you bad things would happen, and no doubt underneath his look of abject terror, he must be gloating.
-roy Lunch into
 
 PROP: poster   a motivatational poster
 CALLED: poster
@@ -389,7 +391,35 @@ player SafeR into
 
   generic-handling if exit then
 
-  q" use" if
+  q" talk" verb= if
+    the-object roy = if
+      say: Roy says, "What the hell was that? I don't care. We're all gonna die, containment clear broke down."
+      exit
+    then
+  then
+
+  q" ask" verb= if
+    the-object roy = if
+      the-other unicorn = if
+        say: Roy says, "Have you lost it? It's no time for toys. We have to think of something!"
+        exit
+      then
+      the-other laptop = if
+        say: Roy says, "Sure, whatever, take my laptop, I don't care anymore."
+        exit
+      then
+      the-other n95-mask = if
+        say: Roy says, "Hah, yeah right, that won't make any difference."
+        exit
+      then
+      the-other 0 <> if
+        say: Roy says, "Get that out of my face. I need to find my happy place."
+        exit
+      then
+    then
+  then
+
+  q" use" verb= if
     the-object laptop = if
       say: You'd rather not. That's what got you into this mess in the first place.
       exit
