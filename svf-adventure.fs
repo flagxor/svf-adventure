@@ -8,9 +8,10 @@ game-words set-current
   VERBS: use
   NOUNS: self myself
   NOUNS: man tech body lab lab-tech
-  NOUNS: laptop computer n95 mask poster
+  NOUNS: laptop computer n95 mask poster console orange button airlock posters
 only forth definitions
 
+ATTRIBUTES: .open .locked
 
 ENTITY: player   Me myself and I
 CALLED: self
@@ -39,7 +40,7 @@ DESCRIPTION: Having been designed with heat-sinks in place of a proper fan, this
 laptop safe-room into
 
 ROOM: hydroponics   Hydroponic Garden
-DESCRIPTION: This garden supplies the company cafeteria with a bountiful supply of locally grown organic produce. A steel door lies to the west. A lab-tech is laying face down on the floor.
+DESCRIPTION: This garden supplies the company cafeteria with a bountiful supply of locally grown organic produce. A steel door lies to the west, a dim corridor to the east. A lab-tech is laying face down on the floor.
 
 PROP: poster   a motivatational poster
 CALLED: poster
@@ -172,7 +173,7 @@ B15 F16 B16 B17 B18  0  |m
  0  B19  0   0   0   0  |m
 ;map
 
-ROOM: R01   Placeholder Room
+ROOM: R01   Lobby
 DESCRIPTION: Say something.
 
 ROOM: R02   Placeholder Room
@@ -181,32 +182,54 @@ DESCRIPTION: Say something.
 ROOM: R03   Placeholder Room
 DESCRIPTION: Say something.
 
-ROOM: R04   Placeholder Room
-DESCRIPTION: Say something.
+ROOM: R04   Open Office Floorplan
+DESCRIPTION: You are in a twisty sea of cubicals, all alike. The cubes continue to the south and east. To the north, past fire doors, lies an exit.
 
-ROOM: R05   Placeholder Room
-DESCRIPTION: Say something.
+ROOM: R05   Open Office Floorplan
+DESCRIPTION: You are in a twisty sea of cubicals, all alike. Personal space, being in conflict with rapid fire collaboration has come decidedly second. The cubes continue to the south and west.
 
-ROOM: R06   Placeholder Room
-DESCRIPTION: Say something.
+ROOM: R06   Open Office Floorplan
+DESCRIPTION: You are in a twisty sea of cubicals, all alike. Keen instincts inherited from your savannah dwelling ancestors allow you to use distant landmarks (posters and hand sanitizer dispensers) to orient yourself. The cubes continue to the north and east. To the west, a small passage leads away from the monotony.
 
 ROOM: R07   Placeholder Room
 DESCRIPTION: Say something.
 
-ROOM: R08   Placeholder Room
-DESCRIPTION: Say something.
+ROOM: R08   A T-shaped Hallway
+DESCRIPTION: You are inside a T-shaped hallway. The top of the T contains a padded panel filled with posters held in place by pushpins.
 
-ROOM: R09   Placeholder Room
-DESCRIPTION: Say something.
+ENTITY: posters   various posters pinned to the wall
+CALLED: posters
+DESCRIPTION: Several dozen posters promote various company events, describe company policies on bribery and gift giving. (To be clear the company seems to be opposed to both.) Other posters encourage mindfulness. One ominously asks, "Is this good for the company?"
+posters R08 into
+
+ROOM: ALK   Airlock
+DESCRIPTION: A ten foot radius circular airlock connects the west to the east. A large console sits in the middle of the airlock. A thin layer of dust on either side of the airlock undermines any presense it actually keeps out particulate matter.
+hydroponics ALK connect-we
+
+ENTITY: airlock   airlock
+CALLED: airlock
+DESCRIPTION: The large pair of motorized doors, collection of high speed vents, and lots of glass make for an airlock straight out of a cheap 1960s Sci-Fi episode.
+airlock ALK into
+
+ENTITY: airlock-console   airlock control console
+CALLED: console
+DESCRIPTION: This control console operates the airlock. Prominently placed in the middle of the console is a bright orange button.
+airlock-console ALK into
+
+ENTITY: airlock-toggle   airlock toggle button
+CALLED: button
+CALLED: orange button
+DESCRIPTION: The bright orange button the middle of the console calls to you. What ever could it do?
+airlock-toggle ALK into
 
 ROOM: R10   Placeholder Room
 DESCRIPTION: Say something.
 
-ROOM: R11   Placeholder Room
-DESCRIPTION: Say something.
+ROOM: R11   Open Office Floorplan
+DESCRIPTION: You are in a twisty sea of cubicals, all alike. The simple invention of the noise cancelling headphones has changed so much for modern man. The cubes continue to the north and west. To the east lies a hallway.
 
-ROOM: R12   Placeholder Room
-DESCRIPTION: Say something.
+ROOM: R12   Copier Room
+DESCRIPTION: A combined copied, printer, scanner occupies one side of the small room. On the other, a tall black cabinet. Company policy dictacts no employee shall have to walk more than 500 feet to reach a photocopier or printer.
 
 ROOM: R13   Placeholder Room
 DESCRIPTION: Say something.
@@ -228,9 +251,11 @@ map-inside:
  0  R02 R03  0   0  R16 |m
  0   0  R04 R05  0  R15 |m
  0  R07 R06 R11 R12 R14 |m
-R09 R08  0   0  R13  0  |m
+ALK R08  0   0  R13  0  |m
  0  R10  0   0   0   0  |m
 ;map
+
+0 ALK .east !  ( airlock starts out to the west )
 
 ROOM: shed   Inside Shed
 DESCRIPTION: The shed is illuminated by a single dim lightbulb. A small hatch in the floor leads into darkness. A metal ladder, fused with the concrete is visible.
@@ -241,30 +266,59 @@ R10 shed connect-ud
 player safe-room into
 
 : handle-input
+  ALK room = if
+    q" push" verb= if
+      the-object airlock-console = if
+        say: You lean on the console, it creaks but does not budge.
+        exit
+      then
+      the-object airlock-toggle = if
+        say: You push the button. It sets in motion a clamouring sucking sound.
+        airlock-console .open get if
+          airlock-console .open clear
+          say: The airlock now opens to the west.
+          hydroponics ALK .west !
+          0 ALK .east !
+        else
+          airlock-console .open set
+          say: The airlock now opens to the east.
+          0 ALK .west !
+          R08 ALK .east !
+        then
+        exit
+      then
+    then
+    is-examine? if
+      the-object airlock = if
+        airlock-console .open get if
+          say: The airlock giant airlock surounds you. It currently opens to the east.
+        else
+          say: The airlock giant airlock surounds you. It currently opens to the west.
+        then
+        exit
+      then
+    then
+  then
+
   generic-handling if exit then
 
   q" use" if
-    player find-object
-    dup 0= if
-      drop room find-object
-    then
-    dup laptop = if
+    the-object laptop = if
       say: You'd rather not. That's what got you into this mess in the first place.
-      drop exit
+      exit
     then
-    dup lab-tech = over player = or if
+    the-object lab-tech = over player = or if
       say: For what?!
-      drop exit
+      exit
     then
-    dup n95-mask = if
+    the-object n95-mask = if
       say: You breath through the mask. It is exceedingly tight, so you take it off.
-      drop exit
+      exit
     then
-    dup 0= if
+    the-object 0= if
       say: Use what for what again?
-      drop exit
+      exit
     then
-    drop
   then
 
   say: Sadly, I've got no idea what you mean.
@@ -272,7 +326,8 @@ player safe-room into
 
 : run
   page
-  say: As the explosion rocks the building it reinforces what you had always suspected, joining this startup was a poor career choice.
+  bold: A Silicon Valley Forth Adventure
+  say: An explosion rocks the building. This reinforces what you had always suspected, joining this startup was a poor career choice.
   describe
   say: What's your next move?
   ['] handle-input play-game

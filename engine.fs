@@ -69,6 +69,7 @@ variable uid   2 uid !
 : wrap ( a n -- ) begin dup 0<> while wrap-one repeat 2drop cr ;
 : cwrap ( ccs -- ) cc>s wrap ;
 : say:   eat-trailing postpone sliteral postpone wrap ; immediate
+: bold:   postpone bold postpone say: postpone normal ; immediate
 
 ( Game object properties )
 variable property-count
@@ -98,7 +99,7 @@ ATTRIBUTES: .room .entity .prop
    2dup   swap .parent !
    dup .children @ >r over r> swap .sibling !  .children ! ;
 : into ( o p -- ) over remove' insert' ;
-: contains ( o p -- f ) swap .parent = ;
+: contains? ( o p -- f ) swap .parent = ;
 
 : iterate ( o xt -- )
    swap .children begin dup @ while

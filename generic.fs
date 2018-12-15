@@ -10,7 +10,7 @@ game-words set-current
   NOUNS: northwest northeast southwest southeast
   NOUNS: n s e w nw ne sw se u d
   NOUNS: all
-  VERBS: inventory i get drop look search examine eat drink go
+  VERBS: inventory i get drop look search examine eat drink go push pull
   FILLERS: a an the at
   : quit   cr bye ;
 only forth definitions
@@ -31,7 +31,17 @@ variable the-player   : ego the-player @ ;
 : find-called ( pick o -- pick ) is-called? if nip else drop then ;
 : find-object ( parent -- o ) 0 swap ['] find-called iterate ;
 
+( Find object in inventory or room )
+: my-object ( -- o ) ego find-object ;
+: the-object ( -- o ) my-object dup 0= if drop room find-object then ;
+: held? ( o -- f) ego contains? ;
+: in-room? ( o -- f) room contains? ;
+
+( Shortcuts )
 : is-go? ( -- f ) q" go" verb=  q" " verb= or ;
+: is-examine? ( -- f) q" examine" verb=
+                      q" search" verb= or
+                      q" look" verb= or ;
 
 ( Describe each room on first entry )
 : describe-contents
@@ -144,18 +154,10 @@ variable map-start  variable map-outside
     exit
   then
 
-  q" examine" verb=
-  q" search" verb= or
-  q" look" verb= or if
-    ego find-object
-    dup 0= if
-      drop
-      room find-object
-    then
-    dup if
-      .description @ cwrap
+  is-examine? if
+    the-object if
+      the-object .description @ cwrap
     else
-      drop
       say: I don't see that here.
     then
     exit
@@ -179,7 +181,7 @@ variable map-start  variable map-outside
   then
 
   q" drop" verb= if
-    ego find-object
+    my-object
     dup if
       room into
       say: Dropped.
