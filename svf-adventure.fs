@@ -11,7 +11,8 @@ game-words set-current
   NOUNS: laptop computer n95 mask poster console orange button airlock posters
   NOUNS: fire extinguisher
   NOUNS: house shed concrete blue door
-  NOUNS: minibar mini-bar panic
+  NOUNS: minibar mini-bar panic nickle coin microphone
+  NOUNS: usb lamp "lamp" ramen pack toy unicorn
 only forth definitions
 
 ATTRIBUTES: .open .locked
@@ -23,8 +24,8 @@ DESCRIPTION: A 21st century Morlock, your pallid pallor reflects a life spent in
 player the-player !
 
 
-ROOM: safe-room    Safe Room
-DESCRIPTION: A nearly impenetrable safe-room, complete with panic button, bullet proof glass, and a mini-bar. Built in the event dissatisfied customers, investors, or concerned members of the general public decide to take a hands on approach to the company.  A solid steel door lies to the east.
+ROOM: SafeR    Safe Room
+DESCRIPTION: A nearly impenetrable safe-room, complete with panic button, bullet proof glass, and a mini-bar. Built in the event dissatisfied customers, investors, or concerned members of the general public decide to take a hands on approach to the company. A solid steel door lies to the west.
 
 PROP: n95-mask   an N95 mask
 CALLED: mask
@@ -32,35 +33,38 @@ CALLED: n95
 CALLED: n95 mask
 it .holdable set
 DESCRIPTION: At 60 cents a pop, these N95 personal respiratory masks give you a sense of invincibility in facing a chaotic and toxic particulate filled world.
-n95-mask safe-room into
+n95-mask SafeR into
 
 PROP: laptop   a laptop
 CALLED: laptop
 CALLED: computer
 it .holdable set
 DESCRIPTION: Having been designed with heat-sinks in place of a proper fan, this late model laptop struggles to run Windows.
-laptop safe-room into
+laptop SafeR into
 
 PROP: mini-bar   the minibar
 CALLED: minibar
 CALLED: mini-bar
 DESCRIPTION: A collection of various single malt whiskeys, sundry bitters, a few cans of tonic water. Cocktail shakers and glasses sit to one side.
-mini-bar safe-room into
+mini-bar SafeR into
 
 PROP: panic-button   the panic button
 CALLED: panic button
 CALLED: button
 DESCRIPTION: A bright red button is intended to close steel door and summon the authorities in the event love fails to triumph.
-panic-button safe-room into
+panic-button SafeR into
 
-ROOM: hydroponics   Hydroponic Garden
+ROOM: Hydro   Hydroponic Garden
 DESCRIPTION: This garden supplies the company cafeteria with a bountiful supply of locally grown organic produce. A steel door lies to the west, a dim corridor to the east. A lab-tech is laying face down on the floor.
+
+ROOM: Lunch   Company Cafeteria
+DESCRIPTION: In order to compete in attracting top talent, the company provides free meals to its employees for breakfast, lunch, and dinner.
 
 PROP: poster   a motivatational poster
 CALLED: poster
 it .holdable set
 DESCRIPTION: Much like a Soviet era poster, this slice of internal company propaganda encourages the "workers" to give their all to the cause.
-poster hydroponics into
+poster Hydro into
 
 ENTITY: lab-tech   a lab technician
 CALLED: man
@@ -69,7 +73,7 @@ CALLED: lab tech
 CALLED: lab-tech
 CALLED: body
 DESCRIPTION: The lab tech has a hideous grin on his face, and seems to be most thoroughly dead. It's not readily apparent what caused his death.
-lab-tech hydroponics into
+lab-tech Hydro into
 
 
 ROOM: B01   Fence
@@ -162,8 +166,15 @@ DESCRIPTION: A thick forest surrounds you. Large ancient pine trees obscure much
 ROOM: F11   Forest
 DESCRIPTION: A thick forest surrounds you. Large ancient pine trees obscure much of the sun. Calls of birds sound occassionally in all directions.
 
-ROOM: F12   Forest
-DESCRIPTION: A thick forest surrounds you. Large ancient pine trees obscure much of the sun. Calls of birds sound occassionally in all directions.
+ROOM: CLR   Clearing
+DESCRIPTION: The forest thins here, allowing you to see a patch of the yellow hazed smog of the late summer sky.
+
+PROP: nickle    a nickle
+CALLED: nickle
+CALLED: coin
+it .holdable set
+DESCRIPTION: Apparently it's your last five cents. The greasy coin glints slightly in the light.
+nickle CLR into
 
 ROOM: F13   Forest
 DESCRIPTION: A thick forest surrounds you. Large ancient pine trees obscure much of the sun. Calls of birds sound occassionally in all directions.
@@ -194,7 +205,7 @@ B01 B02 B03 B04 B05 B06 |m
 B07 F01 F02 F03 F04 B08 |m
 B09 F05 F06 F07 B10  0  |m
 B11 F08 F09 F10 F11 B12 |m
-B13 F12 F13 HOU F15 B14 |m
+B13 CLR F13 HOU F15 B14 |m
 B15 F16 B16 B17 B18  0  |m
  0  B19  0   0   0   0  |m
 ;map
@@ -202,11 +213,18 @@ B15 F16 B16 B17 B18  0  |m
 ROOM: Lobby   Lobby
 DESCRIPTION: Say something.
 
-ROOM: R02   Placeholder Room
-DESCRIPTION: Say something.
+ROOM: Troph   Trophy Room
+DESCRIPTION: Two large glass display cases line the hallway containing awards presented to the company for innovation, disruption, and just plain being cool. In all probability, most are the result of being a "gold circle" sponser of various conferences. They transform the abstract path to a directorship into the mortal realm for all to see.
 
-ROOM: R03   Placeholder Room
-DESCRIPTION: Say something.
+ROOM: Break   Break Room
+DESCRIPTION: While many Bay Area companies are known for lavish in-house meals and snacks, the investors of this privately held company translated their investment in interior security (cameras) into a crisp justification for less being more: the employees clearly pocket the snacks. This being the weekend, cupboards are largely bare.
+
+PROP: ramen   a pack of ramen
+CALLED: ramen
+CALLED: pack
+it .holdable set
+DESCRIPTION: It's a package of chicken "flavored" ramen, the de-facto currency in the nation's prisons. Nearly as bad for you as a cigarette, it has displaced them as the coin of choice for felons everywhere.
+ramen Break into
 
 ROOM: Off04   Open Office Floorplan
 DESCRIPTION: You are in a twisty sea of cubicals, all alike. The cubes continue to the south and east. To the north, past fire doors, lies an exit.
@@ -230,7 +248,6 @@ posters Troom into
 
 ROOM: ALock   Airlock
 DESCRIPTION: A ten foot radius circular airlock connects the west to the east. A large console sits in the middle of the airlock. A thin layer of dust on either side of the airlock undermines any presense it actually keeps out particulate matter.
-hydroponics ALock connect-we
 
 PROP: airlock   airlock
 CALLED: airlock
@@ -264,41 +281,61 @@ DESCRIPTION: You are in a twisty sea of cubicals, all alike. The simple inventio
 ROOM: CopyR   Copier Room
 DESCRIPTION: A combined copied, printer, scanner occupies one side of the small room. On the other, a tall black cabinet. Company policy dictacts no employee shall have to walk more than 500 feet to reach a photocopier or printer.
 
-ROOM: R13   Placeholder Room
-DESCRIPTION: Say something.
+ROOM: Machn   Machine Room
+DESCRIPTION: Despite the general silence the pervades the building, the small machine continues to hum along. Various red and green leds blink throughout. While the bulk of the companies computing resources are in the cloud, a small batch of local rackmounted systems are kept on site for particularly sensitive, or incriminating data.
 
-ROOM: R14   Placeholder Room
-DESCRIPTION: Say something.
+PROP: lamp   a usb "lamp"
+CALLED: usb lamp
+CALLED: lamp
+CALLED: usb "lamp"
+it .holdable set
+DESCRIPTION: A cheap prize handed out at some event or other, branded with the company logo, this USB-A device powers a small LED lamp.
+lamp Machn into
 
-ROOM: R15   Placeholder Room
-DESCRIPTION: Say something.
+ROOM: Off14   Corner Office
+DESCRIPTION: The proverbial corner office, the company's enigmatic founder shares this small space with the company's COO. One is known for wild ideas and behavior, the other as the cautious adult in the room. Doors lead west, east, and north, to provide multiple means of escape.
 
-ROOM: R16   Placeholder Room
-DESCRIPTION: Say something.
+PROP: unicorn   a toy unicorn
+CALLED: toy
+CALLED: toy unicorn
+CALLED: unicorn
+it .holdable set
+DESCRIPTION: Talisman against quarterly losses, SEC investigations, and meglomanical self doubt the company founder no doubt holds this plastic toy dear.
+unicorn Off14 into
 
-ROOM: R17   Placeholder Room
-DESCRIPTION: Say something.
+ROOM: Ramp   Ramp
+DESCRIPTION: The hallway slopes downward as the hallway runs south to north.
+
+ROOM: Sound   Soundproof Room
+DESCRIPTION: Ironically, this soundproof room is used by the company to simulate conditions in a noisy train station. Said simulation not being in progress, the dead silence give you feeling of unrelenting dread. You are eagerly drawn to the southern exit.
+
+PROP: microphone   a professional microphone
+CALLED: microphone
+DESCRIPTION: A $10,000 professinal grade microphone, this device can hear the drop of a pin.
+microphone Sound into
 
 map-inside:
-  0   Lobby   0     0     0    R17  |m
-  0    R02   R03    0     0    R16  |m
-  0     0   Off04 Off05   0    R15  |m
-  0   Lroom Off06 Off11 CopyR  R14  |m
-ALock Troom   0     0    R13    0   |m
-  0   Laddr   0     0     0     0   |m
+  0     0     0   Lobby   0     0     0     0     0   |m
+  0     0     0   Troph Break   0     0   Sound   0   |m
+  0     0     0     0   Off04 Off05   0   Ramp    0   |m
+  0     0     0   Lroom Off06 Off11 CopyR Off14 SafeR |m
+Lunch Hydro ALock Troom   0     0   Machn   0     0   |m
+  0     0     0   Laddr   0     0     0     0     0   |m
 ;map
 
-0 ALock .east !  ( airlock starts out to the west )
+
+( airlock starts out to the east )
+0 ALock .west !
+airlock-console .open set
 
 ROOM: shed   Inside Shed
 DESCRIPTION: The shed is illuminated by a single dim lightbulb. A small hatch in the floor leads into darkness. A metal ladder, fused with the concrete is visible.
 
 ( Glue in the start rooms )
-safe-room hydroponics connect-we
 shed Laddr connect-ud
 
 ( Start in the safe room )
-player safe-room into
+player SafeR into
 
 : handle-input
   ALock room = if
@@ -312,7 +349,7 @@ player safe-room into
         airlock-console .open get if
           airlock-console .open clear
           say: The airlock now opens to the west.
-          hydroponics ALock .west !
+          Hydro ALock .west !
           0 ALock .east !
         else
           airlock-console .open set
