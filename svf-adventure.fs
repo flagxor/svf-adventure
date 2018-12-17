@@ -31,7 +31,7 @@ PROP: n95-mask   an N95 mask
 CALLED: mask
 CALLED: n95
 CALLED: n95 mask
-DESCRIPTION: At 60 cents a pop, these N95 personal respiratory masks give you a sense of invincibility in facing a chaotic and toxic particulate filled world.
+DESCRIPTION: At 60 cents a pop, these N95 personal respiratory masks give you a sense of invincibility in the face of a chaotic and toxic particulate filled world.
 n95-mask SafeR into
 
 PROP: laptop   a laptop
@@ -221,7 +221,7 @@ ROOM: Troph   Trophy Room
 DESCRIPTION: Two large glass display cases line the hallway containing awards presented to the company for innovation, disruption, and just plain being cool. In all probability, most are the result of being a "gold circle" sponser of various conferences. They transform the abstract path to a directorship into the mortal realm for all to see.
 
 ROOM: Break   Break Room
-DESCRIPTION: While many Bay Area companies are known for lavish in-house meals and snacks, the investors of this privately held company translated their investment in interior security (cameras) into a crisp justification for less being more: the employees clearly pocket the snacks. This being the weekend, cupboards are largely bare.
+DESCRIPTION: While many Bay Area companies are known for lavish in-house meals and snacks, the investors of this privately held company translated their investment in interior security (cameras) into a crisp justification for less being more, i.e. the employees clearly pocket the snacks. This being the weekend, cupboards are largely bare.
 
 PROP: ramen   a pack of ramen
 CALLED: ramen
@@ -250,11 +250,11 @@ DESCRIPTION: Several dozen posters promote various company events, describe comp
 posters Troom into
 
 ROOM: ALock   Airlock
-DESCRIPTION: A ten foot radius circular airlock connects the west to the east. A large console sits in the middle of the airlock. A thin layer of dust on either side of the airlock undermines any presense it actually keeps out particulate matter.
+DESCRIPTION: A ten foot radius circular airlock connects the west to the east. A large console sits in the middle of the airlock. A thin layer of dust on either side of the airlock undermines any pretense it actually keeps out particulate matter.
 
 SCENERY: airlock   airlock
 CALLED: airlock
-DESCRIPTION: The large pair of motorized doors, collection of high speed vents, and lots of glass make for an airlock straight out of a cheap 1960s Sci-Fi episode.
+DESCRIPTION: A large pair of motorized doors, a collection of high speed vents, and lots of glass make for an airlock straight out of a cheap 1960s Sci-Fi episode.
 airlock ALock into
 
 SCENERY: airlock-console   airlock control console
@@ -265,11 +265,11 @@ airlock-console ALock into
 SCENERY: airlock-toggle   airlock toggle button
 CALLED: button
 CALLED: orange button
-DESCRIPTION: The bright orange button the middle of the console calls to you. What ever could it do?
+DESCRIPTION: The bright orange button the middle of the console calls to you... What ever could it do?
 airlock-toggle ALock into
 
 ROOM: Laddr   Hallway Dead End
-DESCRIPTION: At the end of the hallway, a space for a fire extinguisher, painted red filles the right side of the wall. A metal ladder, painted white, leads up into the ceiling.
+DESCRIPTION: At the end of the hallway, a red space for a fire extinguisher fills the right side of the wall. A metal ladder, painted white, leads up into the ceiling.
 
 PROP: extinguisher   a fire extinguisher
 CALLED: fire extinguisher
@@ -278,13 +278,13 @@ DESCRIPTION: Dutifully marked with a regularly updated log, a lone fire extingui
 extinguisher Laddr into
 
 ROOM: Off11   Open Office Floorplan
-DESCRIPTION: You are in a twisty sea of cubicals, all alike. The simple invention of the noise cancelling headphones has changed so much for modern man. The cubes continue to the north and west. To the east lies a hallway.
+DESCRIPTION: You are in a twisty sea of cubicals, all alike. The simple invention of the noise cancelling headphone has changed so much for modern man. The cubes continue to the north and west. To the east lies a hallway.
 
 ROOM: CopyR   Copier Room
 DESCRIPTION: A combined copied, printer, scanner occupies one side of the small room. On the other, a tall black cabinet. Company policy dictacts no employee shall have to walk more than 500 feet to reach a photocopier or printer.
 
 ROOM: Machn   Machine Room
-DESCRIPTION: Despite the general silence the pervades the building, the small machine continues to hum along. Various red and green leds blink throughout. While the bulk of the companies computing resources are in the cloud, a small batch of local rackmounted systems are kept on site for particularly sensitive, or incriminating data.
+DESCRIPTION: Despite the general silence the pervades the building, this small collection of rack mounted computers continues to hum along till doomsday. Various red and green LEDs blink throughout. While the bulk of the company's computing resources are in the cloud, a small batch of local rackmounted systems are kept on site for particularly sensitive, or incriminating data.
 
 PROP: lamp   a usb "lamp"
 CALLED: usb lamp
@@ -300,14 +300,14 @@ PROP: unicorn   a toy unicorn
 CALLED: toy
 CALLED: toy unicorn
 CALLED: unicorn
-DESCRIPTION: Talisman against quarterly losses, SEC investigations, and meglomanical self doubt the company founder no doubt holds this plastic toy dear.
+DESCRIPTION: Talisman against quarterly losses, SEC investigations, and megalomaniacal self doubt the company founder no doubt holds this plastic toy dear.
 unicorn Off14 into
 
 ROOM: Ramp   Ramp
 DESCRIPTION: The hallway slopes downward as the hallway runs south to north.
 
 ROOM: Sound   Soundproof Room
-DESCRIPTION: Ironically, this soundproof room is used by the company to simulate conditions in a noisy train station. Said simulation not being in progress, the dead silence give you feeling of unrelenting dread. You are eagerly drawn to the southern exit.
+DESCRIPTION: Ironically, this soundproof room is used by the company to simulate conditions in a noisy train station. Said simulation not being in progress, the dead silence gives you a feeling of unrelenting dread. You are eagerly drawn to the southern exit.
 
 PROP: microphone   a professional microphone
 CALLED: microphone
@@ -363,9 +363,9 @@ player SafeR into
     is-examine? if
       the-object airlock = if
         airlock-console .open get if
-          say: The airlock giant airlock surounds you. It currently opens to the east.
+          say: The giant airlock surounds you. It currently opens to the east.
         else
-          say: The airlock giant airlock surounds you. It currently opens to the west.
+          say: The giant airlock surounds you. It currently opens to the west.
         then
         exit
       then
