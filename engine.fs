@@ -48,8 +48,9 @@ variable uid   2 uid !
 : phrase   obj cell+ @ 32 lshift obj @ 8 lshift + cmd @ + ;
 : phrase=   phrase = ;
 : verb=   phrase vmask and = ;
-: object=   phrase 8 rshift omask and = ;
-: other=   phrase 32 rshift omask and = ;
+: object-only ( n -- n ) 8 rshift omask and ;
+: object=   object-only phrase object-only = ;
+: other=   object-only phrase 32 rshift omask and = ;
 
 ( Parse current phrase )
 : eat-word   bl word find if execute else drop bad-word then ;

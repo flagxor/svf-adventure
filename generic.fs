@@ -20,8 +20,8 @@ game-words set-current
   NOUNS: all
   VERBS: inventory i get drop look search examine eat drink go push pull
   VERBS: enter exit talk ask
-  PREPOSITIONS: about
-  FILLERS: a an the at
+  PREPOSITIONS: to about
+  FILLERS: a an the at to
   : quit   cr bye ;
 only forth definitions
 
