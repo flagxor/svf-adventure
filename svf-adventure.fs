@@ -393,7 +393,7 @@ player SafeR into
 
   q" talk" verb= if
     the-object roy = if
-      say: Roy says, "What the hell was that? I don't care. We're all gonna die, containment clear broke down."
+      say: Roy says, "What the hell was that? I don't care. We're all gonna die, containment must have broke down."
       exit
     then
   then
